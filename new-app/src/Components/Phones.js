@@ -2,6 +2,18 @@ import {useState, useEffect} from 'react';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 
+function callApi() {
+  fetch('http://localhost:8080/api/button', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json' 
+    },
+  })
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
+}
+
 function Phones() {
   const [phones, setPhones] = useState([]);
 
@@ -32,7 +44,7 @@ function Phones() {
       </Table>
 
 
-      <Button striped bordered onClick={() => {console.log("Phone Added!")}}>Add Phone</Button>
+      <Button striped bordered onClick={() => {callApi()}}>Add Phone</Button>
     </div>
   );
 }

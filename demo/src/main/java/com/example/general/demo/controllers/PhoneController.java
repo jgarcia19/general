@@ -1,5 +1,6 @@
 package com.example.general.demo.controllers;
 
+import com.example.general.demo.domain.PhoneService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +11,12 @@ import java.util.Map;
 @RequestMapping("/api")
 public class PhoneController {
 
+    private final PhoneService phoneService;
+
+    public PhoneController(PhoneService phoneService) {
+        this.phoneService = phoneService;
+    }
+
     @GetMapping("/test")
     public ResponseEntity<Map<String, String>> testEndpoint() {
 
@@ -19,6 +26,13 @@ public class PhoneController {
 
     @PostMapping("/button")
     public ResponseEntity<Map<String, String>> addPush() {
-        return ResponseEntity.ok(Map.of("message", "You pushed the button!"));
+        String result = phoneService.recordPush();
+
+        if (result.equals("success")) {
+            return ResponseEntity.ok(Map.of("message", "Button Push Recorded!"));
+        } else {
+            return ResponseEntity.status(500).build();
+        }
+
     }
 }

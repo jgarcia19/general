@@ -13,7 +13,10 @@ public class PhoneService {
     }
 
     public String recordPush() {
-        return null;
+        boolean result = phoneRepository.recordPush("Button was pushed!");
+
+        if (result) return "success";
+        return "fail";
     }
 
 }
